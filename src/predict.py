@@ -38,9 +38,14 @@ def predict_text(text):
 
     probability = model.predict(sequence, verbose=0)[0][0]
 
-    prediction = "AI Generated" if probability >= 0.5 else "Human Written"
+    if probability >= 0.5:
+        prediction = "AI Generated"
+        confidence = probability
+    else:
+        prediction = "Human Written"
+        confidence = 1 - probability
 
-    return {
+        return {
         "prediction": prediction,
-        "confidence": float(probability),
-    }
+        "confidence": float(confidence),
+        }
